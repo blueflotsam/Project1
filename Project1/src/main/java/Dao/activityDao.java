@@ -1,0 +1,102 @@
+package Dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import obj.reimbursment;
+
+public class activityDao {
+	private Connection conn=JDBCConnection.getConnection();
+	
+	public void update(reimbursment r){
+		String sql="update reimbursement set type=?, amount=?, info=?, status=? where id=? AND grade=? AND age=?;";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ps.setString(1,r.getType());
+			ps.setFloat(2, r.getAmount());
+			ps.setString(3, r.getInfo());
+			ps.setString(4, r.getStatus());
+			ps.setInt(5, r.getId());
+			ps.setString(6, Character.toString(r.getGrade()));
+			ps.setInt(7, r.getAge());
+			ps.executeQuery();
+			
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public void update2(reimbursment r){
+		String sql="update reimbursement set grade=? where id=? AND info=? AND age=?;";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ps.setString(1,Character.toString(r.getGrade()));
+			ps.setFloat(2, r.getId());
+			ps.setString(3, r.getInfo());
+			ps.setInt(4, r.getAge());
+			ps.executeQuery();
+			
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	public void add(reimbursment r) {
+		// TODO Auto-generated method stub
+		String sql="insert into reimbursement values(?,'E', ?,?,?,?,?);";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ps.setString(2,r.getType());
+			ps.setFloat(3, r.getAmount());
+			ps.setString(6, r.getInfo());
+			ps.setString(4, r.getStatus());
+			ps.setInt(1, r.getId());
+			ps.setInt(5, r.getAge());
+			ps.executeQuery();
+			
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+
+	public void delete(reimbursment r) {
+		// TODO Auto-generated method stub
+		String sql="delete from reimbursement where id=? AND type=? AND amount=? AND grade=? AND age=? AND info=?;";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ps.setString(2,r.getType());
+			ps.setFloat(3, r.getAmount());
+			ps.setString(6, r.getInfo());
+			ps.setString(4, Character.toString(r.getGrade()));
+			ps.setInt(1, r.getId());
+			ps.setInt(5, r.getAge());
+			ps.executeQuery();
+			
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+
+	public void update3(reimbursment r) {
+		String sql="update reimbursement set amount=? where id=? AND info=? AND age=?;";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ps.setFloat(1,r.getAmount());
+			ps.setFloat(2, r.getId());
+			ps.setString(3, r.getInfo());
+			ps.setInt(4, r.getAge());
+			ps.executeQuery();
+			
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+}

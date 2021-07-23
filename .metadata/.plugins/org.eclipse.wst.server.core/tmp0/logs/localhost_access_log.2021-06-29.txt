@@ -1,0 +1,14 @@
+127.0.0.1 - - [29/Jun/2021:20:50:11 -0500] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:20:50:16 -0500] "GET /Project1/html/mainPage.html HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:20:50:16 -0500] "GET /favicon.ico HTTP/1.1" 404 762
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:20:50:23 -0500] "POST /Project1/hello HTTP/1.1" 200 13
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:20:50:23 -0500] "GET /Project1/html/Supervisor.html?1 HTTP/1.1" 200 4912
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:20:50:23 -0500] "GET /Project1/supervisor?id=1 HTTP/1.1" 200 513
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:20:50:31 -0500] "GET /Project1/html/Employee.html?1 HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:20:50:31 -0500] "GET /Project1/employee?id=1 HTTP/1.1" 200 397
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:20:59:45 -0500] "GET /Project1/html/Employee.html?1 HTTP/1.1" 200 5254
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:20:59:45 -0500] "GET /Project1/employee?id=1 HTTP/1.1" 200 397
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:21:00:05 -0500] "GET /Project1/html/Employee.html?1 HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:21:00:05 -0500] "GET /Project1/employee?id=1 HTTP/1.1" 200 397
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:21:00:11 -0500] "GET /Project1/html/Employee.html?2 HTTP/1.1" 200 5254
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:21:00:11 -0500] "GET /Project1/employee?id=2 HTTP/1.1" 200 116

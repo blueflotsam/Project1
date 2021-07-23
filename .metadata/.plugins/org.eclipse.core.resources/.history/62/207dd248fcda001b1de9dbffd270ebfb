@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="welcome">
+            <p id="w">Welcome Supervisor</p>
+            <!--welcome span-->
+        </div>
+        <span id=l>
+        	<button id="logout"> logout</button>
+        </span>
+        <div>
+            <!--current activities-->
+            <table id="current">
+                <!--create new activity added in-->
+                <tr>
+					<th>Type</th>
+					<th>Amount</th>
+					<th>Grade</th>
+					<th>Age</th>
+					<th>Additional Information</th>
+				</tr>
+            </table>
+        </div>
+        <div>
+        	
+        </div>
+        <script>
+        
+            document.getElementById("logout").addEventListener("click",function(){
+                window.location.replace("mainPage.html");
+            },false);
+
+            //fetch info from server
+            let total=1000;
+            console.log("here");
+            let url="http://localhost:8080/Project1/supervisor?id=";
+            //TODO set id not whatever the ucrrent session is
+            let id=1;
+            uri=window.location.href;
+            if(uri.includes("?")){
+            	id=uri.substring(uri.length-1);
+            }
+            url+=id;
+            let xhttp=new XMLHttpRequest();
+            xhttp.onreadystatechange=receiveData;
+            xhttp.open('GET', url, true);
+            xhttp.send();
+
+            function receiveData(){
+            if(xhttp.readyState==4&&xhttp.status==200){
+                let r=xhttp.responseText;
+            	//console.log(r);
+            	let res=r.split("}");
+            //parse each activity from r and put into list
+           for( let i=0; i<res.length;i++){
+        	   	let elem=res[i].split(",");
+        	   	console.log(elem);
+        	   	if(elem[0]!=""){
+            		let list=document.getElementById("current");
+            		let id=elem[0].split(":")[1];
+            		let grade=elem[1].split(":")[1];
+            		grade=grade.slice(1,grade.length-1);
+            		let type=elem[2].split(":")[1];
+            		type=type.slice(1,type.length-1);
+            		let amount=elem[3].split(":")[1];
+            		addTotal(type, amount);
+            		let status=elem[4].split(":")[1];
+            		status=status.slice(1,status.length-1);
+            		let age=elem[5].split(":")[1];
+            		let info=elem[6].split(":")[1];
+            		info=info.slice(1,info.length-1);
+            		console.log(id);
+            		//let li=document.createElement('li');
+            		//li.innerHTML='Type: '+type+"Amount: "+amount+"\tGrade: "+grade+"\tAge: "+age+"\tMisc: "+info;
+            		//list.appendChild(li);
+            		let tr =document.createElement('tr');
+            		let tdType=document.createElement("td");
+            		tdType.innerHTML=type;
+            		tr.appendChild(tdType);
+            		let tdAmount=document.createElement("td");
+            		tdAmount.innerHTML=amount;
+            		tr.appendChild(tdAmount);
+            		let tdGrade=document.createElement("td");
+            		tdGrade.innerHTML=grade;
+            		tr.appendChild(tdGrade);
+            		let tdAge=document.createElement("td");
+            		tdAge.innerHTML=age;
+            		tr.appendChild(tdAge);
+            		let tdInfo=document.createElement("td");
+            		tdInfo.innerHTML=info;
+            		tr.appendChild(tdInfo);
+            		list.appendChild(tr);
+            		
+            		
+            		if(status=='supervisor'){
+            			let b=document.createElement('button');
+            			b.addEventListener("click", async function(){
+            	        	let input=window.prompt("Enter an explanation for approval");
+            	        	let url="http://localhost:8080/Project1/employee";
+            	        	let employee='approved';
+            	        	let json={"id":id,"grade":grade,"type":type,"amount":amount,"status":employee,"age":age,"info":input};
+            	            let xhttp = new XMLHttpRequest();
+            	            xhttp.onreadystatechange = send;
+            	            xhttp.open("POST", url, true);
+            	            xhttp.setRequestHeader('Content-Type', 'application/json');
+            	            xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
+            	            xhttp.send(JSON.stringify(json));
+            	            /*let response = await fetch(url, {
+            	                method: 'POST',
+            	                headers: {
+            	                    'Content-Type': 'application/json;charset=utf-8'
+            	                },
+            	                body: JSON.stringify(json)
+            	            }*/
+            	            //let result = await response.json();
+            	        });
+            	        b.textContent="Approve";
+            			tr.appendChild(b);
+            			let b2=document.createElement('button');
+            			b2.addEventListener("click", async function(){
+            	        	let input=window.prompt("Enter an explanation for denial");
+            	        	let url="http://localhost:8080/Project1/employee";
+            	        	let employee=window.prompt("deny to Head (h), Supervisor (s), Employee (e)").toUpperCase();
+            	        	if(employee=='S'){
+            	        		employee='supervisor';
+            	        	}
+            	        	else if(employee=='H'){
+            	        		employee='head';
+            	        	}
+            	        	else{
+            	        		employee='employee';
+            	        	}
+            	        	let json={"id":id,"grade":grade,"type":type,"amount":amount,"status":employee,"age":age,"info":input};
+            	            let xhttp = new XMLHttpRequest();
+            	            xhttp.onreadystatechange = send;
+            	            xhttp.open("POST", url, true);
+            	            xhttp.setRequestHeader('Content-Type', 'application/json');
+            	            xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
+            	            xhttp.send(JSON.stringify(json));
+            	            /*let response = await fetch(url, {
+            	                method: 'POST',
+            	                headers: {
+            	                    'Content-Type': 'application/json;charset=utf-8'
+            	                },
+            	                body: JSON.stringify(json)
+            	            }*/
+            	            //let result = await response.json();
+            	        });
+            	        b2.textContent="Deny";
+            			tr.appendChild(b2);
+            		}
+            		
+        	   	}
+            }
+            console.log("past loop");
+            
+            }
+    else{
+        console.log("not working");
+    }
+    
+    function addTotal(type, amount){
+    	if(type=='Certification'){
+    		total-=amount;
+    	}
+    	else if(type=='Seminars'){
+    		total-=amount*.6;
+    	}
+    	else if(type=='Technical Training'){
+    		total-=amount*.9;
+    	}
+    	else if(type=='Certification Prep'){
+    		total-=amount*.75;
+    	}
+    	else{
+    		total-=amount*.3;
+    	}
+    	if(total<0)
+    		total=0;
+    	
+    	
+    }
+};
+
+document.getElementById("new").addEventListener("click",function(){
+	let type=window.prompt("Enter the type of reimbursement: ");
+	let amount=window.prompt("Enter the monetary amount: ");
+	let info=window.prompt("Enter any additional information");
+},false);
+
+function send(){
+	//donothing
+	console.log("won");
+}
+
+
+        </script>
+<style>
+#welcome{
+	margin:0px;
+	display: inline-block;
+}
+#l{
+	float: right;
+}
+</style>
+    </body>
+</html>

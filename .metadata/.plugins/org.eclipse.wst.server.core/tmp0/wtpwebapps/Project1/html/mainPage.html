@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <span>
+        <p>Login</p>
+            <input type="text" id="username" placeholder="Enter Username">
+            </span>
+        <span>
+            <p>Password</p>
+            <input type="password" id="password" placeholder="Enter Password">
+        </span>
+        <span>
+            <button id="btn">login</button>
+        </span>
+        <script>
+        document.getElementById("btn").addEventListener("click", async function(){
+            let user=document.getElementById("username").value;
+            let pass=document.getElementById("password").value;
+            let url="http://localhost:8080/Project1/hello";
+            //let xhttp=new XMLHttpRequest();
+            console.log("sending post request");
+          	//xhttp.onreadystatechange=send;
+          	//url+='?username='+user+'&password='+pass;
+            //xhttp.open('POST', url, true);
+            console.log(url);
+            //xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            let json={"username":user,"password":pass};
+            //url+='?username+='+user+'&password='+pass;
+            console.log(json);
+            let response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(json)
+            });
+            try{
+        	let result = await response.json();
+        	let idNum=result.substring(result.length-1);
+        	result =result.substring(0,result.length-1);
+        	console.log(result)
+        	if(result=='employee'){
+        		let s="Employee.html?"+idNum;
+        		window.location.replace(s);	
+            }
+        	else if(result=='head'){
+        		let s="Head.html?"+idNum;
+        		window.location.replace(s);	
+            }
+        	else if(result=='supervisor'){
+        		let s="Supervisor.html?"+idNum;
+        		window.location.replace(s);	
+            }
+        	else if(result=='benco'){
+        		let s="Benco.html?"+idNum;
+        		window.location.replace(s);	
+            }
+            }
+            catch(error){
+            	window.alert("invalid username/password");
+            }
+            //const obj=JSON.stringify(json);
+            //xhttp.send(obj);
+            
+            console.log(user+pass);
+            
+        });
+        
+        </script>
+        <style>
+        *{
+	background:#0d0d0d;
+	color:#f2f2f2;
+	font-size:x-large;
+	font-family:"Monaco";
+}
+        </style>
+    </body>
