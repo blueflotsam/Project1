@@ -1,4 +1,4 @@
-# Project1
+# Tuition Reimbursement Management System
 
 # Project Description
   This project is a tuition Reimbursement management system that lets you pass reimbursement requests between employee(requester), supervisor, head, and benifits coordinator
