@@ -1,5 +1,33 @@
-# Project2
-this project uses java, javascript and jdbc to make a full stack application
-to get this project ot work you will need to configure the jdbc config to your database and have the proper tables in said database
-after that run the front end on a tomcat server
-open up on of the html page you want to view and if the backend is setup correctly you the full fuctionality will be displayed
+# Project1
+
+# Project Description
+  This project is a tuition Reimbursement management system that lets you pass reimbursement requests between employee(requester), supervisor, head, and benifits coordinator
+
+# Technologies Used
+  Java 8
+  JavaScript
+  HTML
+  JDBC
+  AWS
+  PostGreSQL
+  
+# Features
+  employee can create a new reimbursement
+  each actor can approve or reject reimbursements alongs with comments on why they approved/rejected the reimbursement
+  
+# To-do list
+  implement time constraint for each reimbursement and approvee
+  normalize the database
+# Getting Started
+  clone repository
+  configure JDBCConnection to point to your database
+  create the following tables in your database
+    Employee
+    Reimbursement
+    login
+    Supervisor
+    Head
+    Benco
+  launch back end server
+  navigate to localhost:8080/login
+  if everything is set up properly you should be able to login and be redirected to the proper page
